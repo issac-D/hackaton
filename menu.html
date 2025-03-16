@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - CodeStorm Restaurant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ... (Your existing styles) ... */
+        
+        .search-container {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        #searchInput {
+            padding-right: 40px;
+        }
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #6c757d;
+        }
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+        }
+        .item-card {
+            display: block !important;
+        }
+        .availability-status {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .available { color: #28a745; }
+        .unavailable { color: #dc3545; }
+        .modal-img {
+            height: 250px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        .menu-category {
+            scroll-margin-top: 80px;
+            
+        }
+        .item-card {
+            transition: transform 0.2s;
+        }
+        .item-card:hover {
+            transform: translateY(-5px);
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+        @media (max-width: 991.98px) {
+            .sidebar {
+                height: auto;
+                position: static;
+            }
+        }
+        .sidebar {
+            background-color: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+        }
+        .sidebar .nav-link {
+            color: #333;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin: 2px 0;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #e9ecef;
+        }
+        .sidebar .nav-link.active {
+            background-color: #0d6efd;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">CodeStorm</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="menu.html">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="feedback.html">Feedback</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container-fluid" style="margin-top: 80px; background-color: #5d8da3;">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="sidebar bg-light p-3" >
+                    <h4 style="background-color: #6775a5;">Menu Categories</h4>
+                    <nav class="nav flex-column" style="background-color: #d6561b;">
+                        <a class="nav-link" href="#appetizers">Appetizers</a>
+                        <a class="nav-link" href="#salads">Salads</a>
+                        <a class="nav-link" href="#soups">Soups</a>
+                        <a class="nav-link" href="#main-courses">Main Courses</a>
+                        <a class="nav-link" href="#fast-food">Fast Food & Burgers</a>
+                        <a class="nav-link" href="#pizza-pasta">Pizza & Pasta</a>
+                        <a class="nav-link" href="#seafood">Seafood</a>
+                        <a class="nav-link" href="#meat-poultry">Meat & Poultry</a>
+                        <a class="nav-link" href="#vegetarian-vegan">Vegetarian & Vegan</a>
+                        <a class="nav-link" href="#desserts">Desserts</a>
+                        <a class="nav-link" href="#beverages">Beverages</a>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="p-3">
+                    <div class="p-3">
+                        <h1 class="mb-4">Our Menu</h1>
+                        <div class="search-container">
+                            <div class="input-group">
+                                <input type="text" id="searchInput" class="form-control" placeholder="Search menu items...">
+                                <i class="fas fa-search search-icon"></i>
+                            </div>
+                        </div>
+                        <div class="no-results" id="noResults">
+                            <h4>No items found matching your search</h4>
+                            <p>Try different keywords or browse our categories</p>
+                        </div>
+                    </div>
+
+                    <section id="appetizers" class="menu-category mb-5">
+                        <h2 class="mb-4">Appetizers</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="garlic-bread">
+                                    <img src="images/Garlic.png" class="card-img-top" alt="Garlic Bread with Cheese">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Garlic Bread with Cheese</h5>
+                                        <p class="card-text text-success">85 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="chicken-wings">
+                                    <img src="images/cryspe.png" class="card-img-top" alt="Crispy Chicken Wings">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Crispy Chicken Wings</h5>
+                                        <p class="card-text text-success">120 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="salads" class="menu-category mb-5">
+                        <h2 class="mb-4">Salads</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="caesar-salad">
+                                    <img src="images/photo_10_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Caesar Salad">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Caesar Salad</h5>
+                                        <p class="card-text text-success">100 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="greek-salad">
+                                    <img src="images/photo_12_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Greek Salad">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Greek Salad</h5>
+                                        <p class="card-text text-success">110 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="chicken-avocado-salad">
+                                    <img src="images\photo_3_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Chicken Avocado Salad">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Chicken Avocado Salad</h5>
+                                        <p class="card-text text-success">150 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="fruit-salad">
+                                    <img src="images/photo_11_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Fruit Salad">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Fruit Salad</h5>
+                                        <p class="card-text text-success">90 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="caprese-salad">
+                                    <img src="images\photo_7_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Caprese Salad">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Caprese Salad</h5>
+                                        <p class="card-text text-success">120 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="spinach-salad">
+                                    <img src="images\photo_6_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Spinach Salad">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Spinach Salad</h5>
+                                        <p class="card-text text-success">130 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="quinoa-salad">
+                                    <img src="images/photo_14_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Quinoa Salad">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Quinoa Salad</h5>
+                                        <p class="card-text text-success">140 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="cobb-salad">
+                                    <img src="images\photo_4_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Cobb Salad">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Cobb Salad</h5>
+                                        <p class="card-text text-success">160 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="soups" class="menu-category mb-5">
+                        <h2 class="mb-4">Soups</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="tomato-soup">
+                                    <img src="images\photo_1_2025-03-16_06-13-25.png" class="card-img-top" alt="Tomato Soup">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Tomato Soup</h5>
+                                        <p class="card-text text-success">90 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="chicken-noodle-soup">
+                                    <img src="images\photo_9_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Chicken Noodle Soup">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Chicken Noodle Soup</h5>
+                                        <p class="card-text text-success">110 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="main-courses" class="menu-category mb-5">
+                        <h2 class="mb-4">Main Courses</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="steak-and-potatoes">
+                                    <img src="images/photo_13_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Steak and Potatoes">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Steak and Potatoes</h5>
+                                        <p class="card-text text-success">250 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="salmon-with-asparagus">
+                                    <img src="images\photo_2_2025-03-16_06-13-25.png" class="card-img-top" alt="Salmon with Asparagus">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Salmon with Asparagus</h5>
+                                        <p class="card-text text-success">280 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order 
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="fast-food" class="menu-category mb-5">
+                        <h2 class="mb-4">Fast Food & Burgers</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="classic-burger">
+                                    <img src="images\photo_8_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Classic Burger">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Classic Burger</h5>
+                                        <p class="card-text text-success">150 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="chicken-burger">
+                                    <img src="images\photo_5_2025-03-16_06-13-25.jpg" class="card-img-top" alt="Chicken Burger">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Chicken Burger</h5>
+                                        <p class="card-text text-success">160 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="pizza-pasta" class="menu-category mb-5">
+                        <h2 class="mb-4">Pizza & Pasta</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="margherita-pizza">
+                                    <img src="assets/menu/margherita-pizza.jpg" class="card-img-top" alt="Margherita Pizza">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Margherita Pizza</h5>
+                                        <p class="card-text text-success">180 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="spaghetti-bolognese">
+                                    <img src="images/sphagetti.png" class="card-img-top" alt="Spaghetti Bolognese">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Spaghetti Bolognese</h5>
+                                        <p class="card-text text-success">170 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="seafood" class="menu-category mb-5">
+                        <h2 class="mb-4">Seafood</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="grilled-salmon">
+                                    <img src="assets/menu/grilled-salmon.jpg" class="card-img-top" alt="Grilled Salmon">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Grilled Salmon</h5>
+                                        <p class="card-text text-success">300 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="shrimp-scampi">
+                                    <img src="assets/menu/shrimp-scampi.jpg" class="card-img-top" alt="Shrimp Scampi">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Shrimp Scampi</h5>
+                                        <p class="card-text text-success">290 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="meat-poultry" class="menu-category mb-5">
+                        <h2 class="mb-4">Meat & Poultry</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="roast-chicken">
+                                    <img src="assets/menu/roast-chicken.jpg" class="card-img-top" alt="Roast Chicken">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Roast Chicken</h5>
+                                        <p class="card-text text-success">220 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="beef-stew">
+                                    <img src="assets/menu/beef-stew.jpg" class="card-img-top" alt="Beef Stew">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Beef Stew</h5>
+                                        <p class="card-text text-success">240 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="vegetarian-vegan" class="menu-category mb-5">
+                        <h2 class="mb-4">Vegetarian & Vegan</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="vegetable-curry">
+                                    <img src="assets/menu/vegetable-curry.jpg" class="card-img-top" alt="Vegetable Curry">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Vegetable Curry</h5>
+                                        <p class="card-text text-success">160 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="vegan-burger">
+                                    <img src="assets/menu/vegan-burger.jpg" class="card-img-top" alt="Vegan Burger">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Vegan Burger</h5>
+                                        <p class="card-text text-success">170 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="desserts" class="menu-category mb-5">
+                        <h2 class="mb-4">Desserts</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="chocolate-cake">
+                                    <img src="assets/menu/chocolate-cake.jpg" class="card-img-top" alt="Chocolate Cake">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Chocolate Cake</h5>
+                                        <p class="card-text text-success">120 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="ice-cream">
+                                    <img src="assets/menu/ice-cream.jpg" class="card-img-top" alt="Ice Cream">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Ice Cream</h5>
+                                        <p class="card-text text-success">90 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="beverages" class="menu-category mb-5">
+                        <h2 class="mb-4">Beverages</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="coffee">
+                                    <img src="assets/menu/coffee.jpg" class="card-img-top" alt="Coffee">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Coffee</h5>
+                                        <p class="card-text text-success">50 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card item-card h-100" data-item-id="juice">
+                                    <img src="assets/menu/juice.jpg" class="card-img-top" alt="Juice">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Juice</h5>
+                                        <p class="card-text text-success">60 ETB</p>
+                                        <button class="btn btn-primary customize-order-btn" data-bs-toggle="modal" data-bs-target="#itemModal">
+                                            Customize & Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="itemModalLabel">Customize Your Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="" alt="Item Image" class="modal-img img-fluid" id="modalItemImage">
+                    <h4 id="modalItemTitle"></h4>
+                    <p id="modalItemPrice" class="text-success"></p>
+                    <div id="modalItemOptions">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addToCartBtn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let cartItems = [];
+            const searchInput = document.getElementById('searchInput');
+            const noResults = document.getElementById('noResults');
+            const itemCards = document.querySelectorAll('.item-card');
+            const customizeOrderBtns = document.querySelectorAll('.customize-order-btn');
+            const modalItemImage = document.getElementById('modalItemImage');
+            const modalItemTitle = document.getElementById('modalItemTitle');
+            const modalItemPrice = document.getElementById('modalItemPrice');
+            const modalItemOptions = document.getElementById('modalItemOptions');
+            const addToCartBtn = document.getElementById('addToCartBtn');
+            let currentItemId = '';
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+                let resultsFound = false;
+    
+                itemCards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    if (title.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        resultsFound = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+    
+                if (resultsFound) {
+                    noResults.style.display = 'none';
+                } else {
+                    noResults.style.display = 'block';
+                }
+            });
+    
+            customizeOrderBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.item-card');
+                    const imageSrc = card.querySelector('.card-img-top').src;
+                    const title = card.querySelector('.card-title').textContent;
+                    const price = card.querySelector('.card-text').textContent;
+                    currentItemId = card.dataset.itemId;
+    
+                    modalItemImage.src = imageSrc;
+                    modalItemTitle.textContent = title;
+                    modalItemPrice.textContent = price;
+    
+                    // Clear previous options
+                    modalItemOptions.innerHTML = '';
+    
+                    // Add customization options based on item (example)
+                    if (currentItemId === 'garlic-bread') {
+                        modalItemOptions.innerHTML = `
+                            <div class="mb-3">
+                                <label class="form-label">Extra Cheese:</label>
+                                <select class="form-select">
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes (+20 ETB)</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Garlic Level:</label>
+                                <select class="form-select">
+                                    <option value="light">Light</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="extra">Extra</option>
+                                </select>
+                            </div>
+                        `;
+                    } else if (currentItemId === 'chicken-wings') {
+                        modalItemOptions.innerHTML = `
+                            <div class="mb-3">
+                                <label class="form-label">Spiciness:</label>
+                                <select class="form-select">
+                                    <option value="mild">Mild</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hot">Hot</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Dipping Sauce:</label>
+                                <select class="form-select">
+                                    <option value="ranch">Ranch</option>
+                                    <option value="bbq">BBQ</option>
+                                    <option value="honey-mustard">Honey Mustard</option>
+                                </select>
+                            </div>
+                        `;
+                    } else if (currentItemId === 'caesar-salad') {
+                        modalItemOptions.innerHTML = `
+                            <div class="mb-3">
+                                <label class="form-label">Dressing:</label>
+                                <select class="form-select">
+                                    <option value="caesar">Caesar</option>
+                                    <option value="ranch">Ranch</option>
+                                    <option value="italian">Italian</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Add Chicken:</label>
+                                <select class="form-select">
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes (+50 ETB)</option>
+                                </select>
+                            </div>
+                        `;
+                    }
+                    // Add more customization options for other items here
+                });
+            });
+    
+            addToCartBtn.addEventListener('click', function() {
+                // Get item data
+                const options = modalItemOptions.querySelectorAll('select');
+                let selectedOptions = {};
+                options.forEach(option => {
+                    selectedOptions[option.previousElementSibling.textContent] = option.value;
+                });
+                cartItems.push({
+                    id: currentItemId,
+                    title: modalItemTitle.textContent,
+                    price: modalItemPrice.textContent,
+                    options: selectedOptions // Use the selectedOptions object here
+                });
+                console.log("cart is now:", cartItems);
+                sessionStorage.setItem('cart', JSON.stringify(cartItems));
+                // Close the modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('itemModal'));
+                modal.hide();
+            });
+    
+            // Sidebar navigation
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+    
+            // Highlight active category in sidebar on scroll
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY;
+                const categories = document.querySelectorAll('.menu-category');
+                categories.forEach(category => {
+                    const categoryId = category.id;
+                    const categoryOffset = category.offsetTop - 100; // Adjust offset as needed
+                    const categoryHeight = category.offsetHeight;
+                    if (scrollPosition >= categoryOffset && scrollPosition < categoryOffset + categoryHeight) {
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        const activeLink = document.querySelector(`.sidebar .nav-link[href="#${categoryId}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
