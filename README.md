@@ -79,7 +79,7 @@ CodeStorm-Restaurant/
 
 Here is a sample image of the salads:
 
-![Salad Menu](assets/images/cobb-salad.jpg)
+![Salad Menu]([assets/images/cobb-salad.jpg](https://www.google.com/imgres?q=salad%20menu&imgurl=https%3A%2F%2Fpistn-prod.s3.amazonaws.com%2Fsystem%2Fphotos%2F253%2Fimages%2Foriginal%2FGuido%27s_Salads_Menu.png&imgrefurl=https%3A%2F%2Fwww.guidospizzagrandblanc.com%2Fservices%2Ffresh_salads&docid=uzEIowGGD3y8aM&tbnid=plKEO5GvIEaSgM&vet=12ahUKEwi02_zS842MAxW09QIHHQbdJ3UQM3oECH8QAA..i&w=1749&h=1708&hcb=2&ved=2ahUKEwi02_zS842MAxW09QIHHQbdJ3UQM3oECH8QAA))
 
 ## Future Improvements
 
