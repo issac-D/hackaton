@@ -91,3 +91,7 @@ Here is a sample image of the salads:
 * Add more menu items and categories.
 * Add a admin panel.
 * Add search functionality.
+prepared by:
+1.yishaq damtew
+2.simegnew arega
+3.yirgalem zegeye
